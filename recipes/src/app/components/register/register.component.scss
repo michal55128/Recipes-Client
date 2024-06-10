@@ -1,0 +1,107 @@
+
+
+body {
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+  }
+  
+  .login-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+  }
+  
+  .login-form {
+    background-color: #444;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    z-index: 1;
+  }
+  
+  .animation-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    // background: linear-gradient(to right, #777, rgb(255, 204, 0),#777, black);
+    background: linear-gradient(to right, #777, #fce8a7,#777, black);
+
+    background-size: 200% 200%;
+    animation: gradientMove 5s infinite alternate;
+  }
+
+
+  
+  h2 {
+    text-align: center;
+    color: #fff;
+  }
+  
+  label {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #fff;
+  }
+  
+  input {
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #777;
+    background-color: #555;
+    color: #fff;
+  }
+  
+  button {
+    padding: 14px 28px;
+    margin-top: 20px;
+    background-color: rgb(255, 191, 0);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: rgb(255, 221, 0);
+  }
+  
+  label[for="password"] {
+    color: white;
+    transition: color 0.5s;
+  
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+  
+      &:hover {
+        color: rgb(255, 217, 0);
+      }
+    }
+  }
+  .errorM{
+     color: rgb(255, 191, 0);
+
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  

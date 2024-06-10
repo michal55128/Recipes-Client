@@ -1,0 +1,44 @@
+
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+  padding: 20px 0; /* Increased padding for thickness */
+}
+
+.navbar-nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Center align items */
+}
+
+.nav-item {
+  margin-right: 20px;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s; /* Smooth color transition */
+}
+
+.nav-item a:hover {
+  color: lightgray;
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.active {
+  color: lightblue;
+}
+
+/* Responsive Styling */
+@media screen and (max-width: 600px) {
+  .navbar {
+    padding: 10px 0; /* Adjust padding for smaller screens */
+  }
+
+  .nav-item {
+    margin: 0 10px; /* Reduce margin for smaller screens */
+  }
+}

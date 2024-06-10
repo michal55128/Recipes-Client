@@ -1,0 +1,58 @@
+
+ <nav>
+  <ul> 
+      <!-- <li><a routerLink="">home</a></li>
+      <li><a routerLink="login">login</a></li>
+       -->
+      <!-- @if(userService.token){ 
+          מציג את הקישורית רק למשתמש רשום
+          <li><a routerLink="list">list (for registres)</a></li>
+      }
+
+      @if(userService.currentUser?.role === 'admin'){ 
+          <li><a routerLink="manager">manager</a></li>
+      } -->
+
+ </ul>
+
+</nav> 
+<header>
+  <nav class="navbar">
+
+    <ul class="navbar-nav">
+
+      <li class="nav-item">
+        <a routerLink="/home" routerLinkActive="active">Home</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/about" routerLinkActive="active">About</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/allrecipes" routerLinkActive="active">AllRecipes</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/contact" routerLinkActive="active">Contact</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="login" routerLinkActive="active">Login</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="register" routerLinkActive="active">Register</a>
+      </li>
+     <!-- <ng-container *ngIf="currentUser"> -->
+      <!-- <mat-icon class="nav-icon" style="color: white ,
+      position: absolute,
+      top: 5%,
+      right: 0,
+      margin-top: 25px,
+      margin-right: 38px,
+      z-index: 999">{{ getUserIcon() }}</mat-icon>
+    -->
+   <!-- </ng-container> -->
+    <mat-icon class="nav-icon" style="color: white; position: absolute;  right: 2%;">{{ getUserIcon() }}</mat-icon>
+
+    </ul>
+  </nav>
+</header>
+
+<router-outlet></router-outlet>

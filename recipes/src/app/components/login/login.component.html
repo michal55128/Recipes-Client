@@ -1,0 +1,35 @@
+<section class="login-container">
+  <div class="animation-lines"></div>
+
+  <div class="login-form">
+    <h2>Login</h2>
+    <form>
+      <label for="email">Email:</label>
+      <input
+      [(ngModel)]="user.email"
+        #email
+        type="text"
+        id="email"
+        name="email"
+        placeholder="Enter your email"
+      />
+
+      <label for="password">Password:</label>
+      <input
+    [(ngModel)]="user.password"
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Enter your password"
+      />
+
+      <button type="submit" (click)="loginA()">Login</button>
+
+      <label for="password">
+        <button type="submit" class='buttonRegister'  (click)="register()">Register</button>
+
+        <!-- <a routerLink="/register" routerLinkActive="active">register</a> -->
+      </label>
+    </form>
+  </div>
+</section>

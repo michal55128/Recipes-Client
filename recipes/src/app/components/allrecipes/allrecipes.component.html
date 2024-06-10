@@ -1,0 +1,31 @@
+<h1>Our Recipes:)</h1>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+<div class="card-container">
+  <div class="grid">
+    @for (recipe of recipes; track recipe._id) {
+
+    <div class="card flex justify-content-center">
+      <p-card
+        [header]="recipe.name"
+        [style]="{ width: '360px' }"
+      >
+        <ng-template pTemplate="header">
+          <img [src]="recipe.image" alt="Card" />
+        </ng-template>
+        <p>
+            {{ recipe.description }}<br/><br/>
+            <mat-icon class="icon">alarm</mat-icon> {{ recipe.preparationTimeInMinute }} minutes<br/><br/>
+            <span [innerHTML]="getLevelIcons(recipe.level)"></span>
+        </p>
+        <ng-template pTemplate="footer">
+          <div class="button-container">
+            <button class="flat-button">recipe details</button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,128 @@
+/* Overall container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Grid for cards */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 20px;
+  }
+  
+  @media screen and (max-width: 1200px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+    }
+  }
+  
+  @media screen and (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    .grid {
+      grid-template-columns: 1fr; /* 1 column for very small screens */
+    }
+  }
+  
+  /* Individual card styles */
+  .card {
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  
+    &:hover {
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  /* p-card styles (assuming it's a custom component) */
+  .card > p-card {
+    .p-card-header {
+      background-color: #f0f0f0;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding: 0.5rem;
+    }
+  
+    .p-card-footer {
+      background-color: #f0f0f0;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      padding: 0.5rem;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .card p {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .card .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .card .button-container button {
+    width: 100%;
+  }
+  
+  .flat-button {
+    background-color: #444444;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .flat-button:hover {
+    background-color: #ffbf00;
+  }
+  h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.5rem;
+    color: #ffbf00;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px #444444;
+    position: relative;
+    z-index: 1;
+    
+    &:before {
+      content: ' ';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -15px;
+      width: 50%;
+      height: 4px;
+      background-color: #ffbf00;
+      z-index: -1;
+    }
+  }
+  
+  
+  .icon {
+    vertical-align: middle; /* או top, bottom, בהתאם למה שמתאים */
+}
+

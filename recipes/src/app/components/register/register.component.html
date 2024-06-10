@@ -1,0 +1,78 @@
+
+  <section class="login-container">
+    <div class="animation-lines"></div>
+  
+    <div class="login-form">
+      <h2>Register</h2>
+      
+      <label class="errorM" *ngIf="userExist" >Email is Exist!!</label>
+
+
+      <form [formGroup]="userForm" (ngSubmit)="register(email,password,username,city)">
+        <label for="email">Email:</label>
+        <input
+        #email
+        [value]="user.email"
+          formControlName="email"
+          type="text"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+        />
+        <div *ngIf="userForm.get('email')?.errors && (userForm.get('email')?.dirty || userForm.get('email')?.touched)">
+          <div *ngIf="userForm.get('email')?.errors?.['required']">Email is required</div>
+          <div *ngIf="userForm.get('email')?.errors?.['email']">Invalid email format</div>
+        </div>
+  
+        <label for="password">Password:</label>
+        <input
+        #password
+          [value]="user.password"
+          formControlName="password"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+        />
+        <div *ngIf="userForm.get('password')?.errors && (userForm.get('password')?.dirty || userForm.get('password')?.touched)">
+          <div *ngIf="userForm.get('password')?.errors?.['required']">Password is required</div>
+          <div *ngIf="userForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</div>
+          <div *ngIf="userForm.get('password')?.errors?.['maxlength']">Password must be at most 10 characters</div>
+        </div>
+  
+        <label for="username">UserName:</label>
+        <input
+        #username
+          formControlName="username"
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+        />
+        <div *ngIf="userForm.get('username')?.errors && (userForm.get('username')?.dirty || userForm.get('username')?.touched)">
+          <div *ngIf="userForm.get('username')?.errors?.['required']">Username is required</div>
+          <div *ngIf="userForm.get('username')?.errors?.['minlength']">Username must be at least 3 characters</div>
+          <div *ngIf="userForm.get('username')?.errors?.['maxlength']">Username must be at most 30 characters</div>
+        </div>
+  
+        <label for="city">City:</label>
+        <input
+        #city
+          formControlName="city"
+          type="text"
+          id="city"
+          name="city"
+          placeholder="Enter your city"
+        />
+        <div *ngIf="userForm.get('city')?.errors && (userForm.get('city')?.dirty || userForm.get('city')?.touched)">
+          <div *ngIf="userForm.get('city')?.errors?.['required']">City is required</div>
+          <div *ngIf="userForm.get('city')?.errors?.['pattern']">Invalid city format</div>
+          <div *ngIf="userForm.get('city')?.errors?.['minlength']">City must be at least 1 character</div>
+          <div *ngIf="userForm.get('city')?.errors?.['maxlength']">City must be at most 100 characters</div>
+        </div>
+
+        <button type="submit" [disabled]="!userForm.valid">Register</button>
+    </form>
+    </div>
+  </section>
+   
