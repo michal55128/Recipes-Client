@@ -1,31 +1,164 @@
 <h1>Our Recipes:)</h1>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  rel="stylesheet"
+/>
 
-<div class="card-container">
-  <div class="grid">
-    @for (recipe of recipes; track recipe._id) {
+<div class="content">
+  <div class="search-container">
+    <button class="searchButton" (click)="searchRecipes()">Search</button>
 
-    <div class="card flex justify-content-center">
-      <p-card
-        [header]="recipe.name"
-        [style]="{ width: '360px' }"
-      >
-        <ng-template pTemplate="header">
-          <img [src]="recipe.image" alt="Card" />
-        </ng-template>
-        <p>
-            {{ recipe.description }}<br/><br/>
-            <mat-icon class="icon">alarm</mat-icon> {{ recipe.preparationTimeInMinute }} minutes<br/><br/>
-            <span [innerHTML]="getLevelIcons(recipe.level)"></span>
-        </p>
-        <ng-template pTemplate="footer">
-          <div class="button-container">
-            <button class="flat-button">recipe details</button>
-          </div>
-        </ng-template>
-      </p-card>
+
+    <input
+      class="searchInput"
+      [(ngModel)]="searchText"
+      type="text"
+      id="search"
+      name="search"
+      placeholder="Search a recipe"
+    />
+    <input
+      class="numberInput"
+      [(ngModel)]="page"
+      type="number"
+      id="page"
+      name="page"
+      placeholder="Page"
+    />
+    <input
+      class="numberInput"
+      [(ngModel)]="perPage"
+      type="number"
+      id="perPage"
+      name="perPage"
+      placeholder="Per Page"
+    />
+    <input
+    class="numberInput"
+    [(ngModel)]="maxtime"
+    type="number"
+    id="time"
+    name="time"
+    placeholder="Max Time"
+  />
+    <!-- <div class="category-select-container">
+    <h3>Select Categories:</h3>
+    <ng-select
+      [items]="categories"
+      bindLabel="description"
+      bindValue="_id"
+      [multiple]="true"
+      [(ngModel)]="selectedCategories"
+      class="custom-select"
+      appendTo="body"
+    >
+    </ng-select>
+  </div> -->
+
+    <div class="selected-categories-container">
+      <h3>Selected Categories:</h3>
+      <ul>
+        @for(category of selectedCategories; track category){
+        <li>{{ getCategoryDescription(category) }}</li>
+        }
+      </ul>
     </div>
-    }
+    <mat-form-field>
+      <mat-label>Select Categories</mat-label>
+      <mat-select
+        multiple
+        (selectionChange)="onSelectionChange()"
+        [(ngModel)]="selectedCategories"
+      >
+        @for(category of categories ;track category._id){
+        <mat-option [value]="category._id">{{
+          category.description
+        }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
   </div>
+  <!-- <div class="search-box">
+  <mat-form-field appearance="outline">
+      <mat-label>חפש מתכון</mat-label>
+      <input matInput #search />
+      <button mat-icon-button matSuffix (click)="clearSearch(search) ">
+          <mat-icon>close</mat-icon>
+      </button>
+  </mat-form-field>
+  <button (click)="applyFilter(search)">חפש</button>
+</div> -->
+
+  <div class="card-container">
+    <div class="grid">
+      @for (recipe of recipes; track recipe._id) {
+
+      <div class="card flex justify-content-center">
+        <p-card [header]="recipe.name" [style]="{ width: '360px' }">
+          <ng-template pTemplate="header">
+            <img [src]="recipe.image" alt="Card" />
+          </ng-template>
+          <p>
+            {{ recipe.description }}<br /><br />
+            <mat-icon class="icon">alarm</mat-icon>
+            {{ recipe.preparationTimeInMinute }} minutes<br /><br />
+            <span [innerHTML]="getLevelIcons(recipe.level)"></span>
+          </p>
+          <ng-template pTemplate="footer">
+            <div class="button-container">
+              <button
+                class="flat-button"
+                (click)="viewRecipeDetails(recipe._id)"
+              >
+                recipe details
+              </button>
+            </div>
+          </ng-template>
+        </p-card>
+      </div>
+      }
+    </div>
+  </div>
+
+  @if(showdialog){
+  <ng-container>
+    <div class="dialog-overlay">
+      <div class="dialog-content">
+        <h2 mat-dialog-title>OOPS..</h2>
+        <mat-dialog-content>
+          <p>You must be logged in to view recipe details.</p>
+          <p>
+            Please
+            <a mat-button color="primary" routerLink="/login">Login</a> or
+            <a mat-button color="primary" routerLink="/register">Register</a> to
+            continue.
+          </p>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+          <button mat-button class="action-button" (click)="closeDialog()">
+            Close
+          </button>
+        </mat-dialog-actions>
+      </div>
+    </div> </ng-container
+  >}
 </div>
+
+<div class="pagination">
+  <button class="pagination-button" (click)="prevPage()" [disabled]="page === 1">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  @for(num of getPageNumbers();track num){
+  <ng-container>
+    <button class="pagination-button" (click)="goToPage(num)" [class.active]="num === page">
+      {{ num }}
+    </button>
+  </ng-container>
+}
+  <button class="pagination-button" (click)="nextPage()" [disabled]="page === totalPages">
+    <i class="fas fa-chevron-right"></i>
+  </button>
+</div>
+<div><br/><br/></div>
+

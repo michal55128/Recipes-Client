@@ -1,0 +1,65 @@
+<h1></h1>
+@if(recipe){
+<div class="recipe-detail">
+    <div class="recipe-detail">
+        <!-- קוד קיים של המתכון -->
+        
+        <div class="share-recipe">
+          <button class="share-button">
+            <i class="fa fa-share-alt"></i> Share Recipe
+          </button>
+        </div>
+      </div>
+  <h1>{{ recipe.name }}</h1>
+  <img [src]="recipe.image" alt="{{ recipe.name }}" class="recipe-image" />
+
+  <div class="recipe-info">
+    <p><i class="fa fa-calendar"></i> Added on: {{ recipe.addDate | date:'yyyy/MM/dd' }}</p>
+    <p><i class="fa fa-tag"></i> Category: {{ recipe.nameCategory }}</p>
+    <p>
+      <i class="fa fa-clock"></i> Preparation Time:
+      {{ recipe.preparationTimeInMinute }} minutes
+    </p>
+    <p>
+      <i class="fa fa-signal"></i> Level:
+      <span [innerHTML]="getLevelIcons(recipe.level)"></span>
+    </p>
+    <p><i class="fa fa-user"></i> Added by: {{ recipe.user.name }}</p>
+  </div>
+
+  <div class="recipe-description">
+    <h2>Description</h2>
+    <p>{{ recipe.description }}</p>
+  
+  @if(recipe.layers.length){
+  <div class="recipe-layers">
+    <h2>Layers</h2>
+    @for( layer of recipe.layers; track recipe._id ){
+    <div>
+      <p><i class="fa fa-layer-group"></i> {{ layer.description }}</p>
+      <ul>
+        @for( component of layer.components; track recipe._id ){
+
+        <li>{{ component }}</li>
+        }
+      </ul>
+    </div>
+    }
+    
+  </div>
+  }
+</div>
+  <div class="recipe-preparation">
+    <h2>Preparation Steps</h2>
+    <ol>
+      @for( step of recipe.Preparation; track recipe._id ){
+      <li>{{ step }}</li>
+      }
+    </ol>
+  </div>
+
+
+  
+</div>
+
+}

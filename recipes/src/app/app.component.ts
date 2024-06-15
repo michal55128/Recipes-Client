@@ -1,47 +1,106 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { UserService } from './shared/services/user.service';
+import { MatCardModule } from '@angular/material/card';
+import { User } from './shared/models/user';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,RouterModule,MatIconModule],
+  imports: [RouterOutlet, RouterModule, MatIconModule, MatCardModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'recipes';
-userService=inject(UserService);
+  userService = inject(UserService);
+  isManager = false;
+  currentUser: User = {};
+  isConected = false;
+  constructor(private router: Router) {}
+  ngOnInit() {
+    {
+      const currentUserString = this.userService.getCurrentUser;
+      if (currentUserString) {
+        this.currentUser = JSON.parse(currentUserString);
+        console.log('currentUser' + this.currentUser);
+        this.isManager = this.currentUser.role == 'admin';
+        this.isConected = true;
+      } else {
+        console.error('No current user found');
+      }
 
-ngOnInit(){
- {
-  console.log(this.userService.getUserDetails());
-  
-    // console.log(this.currentUser);
-    
-    if (!this.currentUser) {
-      return 'person_outline'; 
-    } else if (this.currentUser === 'admin') {
-      return 'verified_user'; 
-    } else {
-      return 'person'; 
+      console.log(this.isConected);
+      console.log(this.isManager);
+
+      if (!this.currentUser) {
+        return 'person_outline';
+      } else if (this.currentUser.role === 'admin') {
+        return 'verified_user';
+      } else {
+        return 'person';
+      }
     }
   }
-}
-  currentUser = this.userService.currentUser?.role; 
+
+  // getUserIcon(): string {
+  //   if (!this.currentUser) {
+  //     return 'person_outline';
+  //   } else if (this.currentUser.role === 'admin') {
+  //     return 'verified_user';
+  //   } else {
+  //     return 'person';
+  //   }
+  // }
+
   getUserIcon(): string {
-   // console.log(this.currentUser);
-    
-    if (!this.currentUser) {
-      return 'person_outline'; 
-    } else if (this.currentUser === 'admin') {
-      return 'verified_user'; 
+    const user = this.currentUser;
+    if (user.role === 'user') {
+      return 'person';
+    } else if (user.role === 'admin') {
+      return 'admin_panel_settings';
     } else {
-      return 'person'; 
+      return 'person_outline';
     }
   }
-}
 
+  logout() {
+    this.userService.logout();
+    this.isConected = !this.isConected;
+  }
+ 
+  login() {
+    this.isConected = !this.isConected;
+  }
+
+  showProfile: boolean = false;
+  showLogin: boolean = true;
+  toggleProfile() {
+    this.showProfile = !this.showProfile;
+  }
+  showLoginUser() {
+    this.showLogin=!this.showLogin;
+  }
+  getUser() {
+    return this.currentUser;
+  }
+  loginUser() {
+    this.router.navigate(['login']);
+    this.showLogin=false;
+  }
+  registerUser() {
+    this.router.navigate(['register']);
+    this.showLogin=false;
+
+  }
+  logOut() {
+    this.userService.logout();
+    this.currentUser = {};
+    this.isConected = !this.isConected;
+    this.showProfile = false;
+    this.showLogin=true;
+  }
+}

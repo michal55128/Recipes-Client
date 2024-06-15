@@ -126,3 +126,269 @@
     vertical-align: middle; /* או top, bottom, בהתאם למה שמתאים */
 }
 
+/* allrecipes.component.scss */
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* אפור חשוף */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.dialog-content {
+  background-color: #1e1e1e; /* אפור שחור */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  color: #fff; /* לבן */
+}
+
+.dialog-content h2 {
+  color: #ffcc00; /* צהוב */
+  margin-bottom: 10px;
+}
+
+.dialog-content mat-dialog-content {
+  margin-bottom: 20px;
+}
+
+.login-link,
+.register-link {
+  color: #ffcc00; /* צהוב */
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.login-link:hover,
+.register-link:hover {
+  text-decoration: underline;
+}
+
+.action-button {
+  margin-left: 10px;
+  text-transform: none;
+}
+
+.action-button.mat-button {
+  background-color: #fbc02d; 
+    color: #1e1e1e; 
+}
+
+
+a{
+ color: #fbc02d !important;
+}
+
+.action-button{
+  color: #f0f0f0 !important;
+  background-color: #444444;
+}
+/* עיצוב של התוכן */
+.content {
+  margin-top: 60px; /* המרחק הזה מתאים לגובה של הנאבאר */
+  padding: 20px;
+}
+
+
+/* עיצוב של הסלקט */
+.category-select-container {
+  max-width: 300px; /* רוחב מקסימלי */
+  margin: 0 auto 20px auto; /* מיקום במרכז */
+  text-align: right; /* מיקום הסלקט בצד ימין */
+}
+
+
+
+/* עיצוב של התוכן */
+.content {
+  margin-top: 60px; /* המרחק הזה מתאים לגובה של הנאבאר */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* מיקום כל התוכן בצד ימין */
+}
+
+/* עיצוב של הסלקט */
+.category-select-container {
+  max-width: 300px; /* רוחב מקסימלי */
+  margin-bottom: 20px; /* מרחק מלמטה */
+  text-align: right; 
+  max-width: 300px; /* רוחב מקסימלי */
+  color: #ffd700; /* צבע טקסט */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ffd700; /* צבע גבול */
+  margin-top: 20px;
+}
+
+.custom-select {
+  width: 100%;
+}
+
+.ng-select {
+  color: #ffd700 !important; /* צבע טקסט */
+}
+
+.ng-select .ng-select-container {
+  border: 1px solid #ffd700 !important; /* צבע גבול */
+  border-radius: 5px; /* פינות מעוגלות */
+}
+
+.ng-select .ng-select-container .ng-placeholder {
+  color: #ffd700 !important; /* צבע placeholder */
+}
+
+.ng-select .ng-select-container .ng-arrow {
+  color: #ffd700 !important; /* צבע החץ */
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-value {
+  display: none; /* הסתרת הערכים שנבחרו */
+}
+
+.ng-select .ng-dropdown-panel .ng-option {
+  color: #ffd700 !important; /* צבע טקסט של אפשרויות */
+}
+
+.ng-select .ng-dropdown-panel .ng-option.ng-option-selected {
+  color: #ffd700 !important; /* צבע טקסט של אפשרות שנבחרה */
+}
+
+/* עיצוב של הקטגוריות שנבחרו */
+.selected-categories-container {
+  max-width: 300px; /* רוחב מקסימלי */
+  color: #ffd700; /* צבע טקסט */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ffd700; /* צבע גבול */
+  margin-top: 20px;
+}
+
+.selected-categories-container h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.selected-categories-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selected-categories-container li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ffd700;
+}
+
+.selected-categories-container li:last-child {
+  border-bottom: none;
+}
+
+.searchInput {
+  padding: 10px !important;
+  width: 300px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
+  font-size: 16px !important;
+  outline: none !important;
+}
+
+.searchInput:focus {
+  border-color: #ffbf00 !important; /* צבע גבול כאשר בתוך עיגול */
+  box-shadow: 0 0 8px #ffbf00 !important; /* אפקט גבול */
+}
+
+.category-select {
+  flex: 1; /* התאמה לרוחב */
+  margin-left: 20px; /* מרחק מהשוליים */
+}
+
+.mat-form-field {
+  width: 100%; /* רוחב */
+}
+
+.mat-select-trigger {
+  color: #444444; /* צבע רקע */
+}
+
+.mat-option {
+  color: #ffbf00; /* צבע האופציות */
+  font-size: 16px; /* גודל גופן */
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.searchButton {
+  background-color: #ffbf00;
+  color: #444444;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.searchButton:hover {
+  background-color: #444444;
+  color: #ffbf00;
+}
+.numberInput {
+  padding: 10px !important;
+  width: 120px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
+  font-size: 16px !important;
+  outline: none !important;
+  margin-right: 10px;
+}
+
+.numberInput:focus {
+  border-color: #ffbf00 !important; /* צבע גבול כאשר בתוך עיגול */
+  box-shadow: 0 0 8px #ffbf00 !important; /* אפקט גבול */
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  outline: none;
+}
+
+.pagination-button.active {
+  background-color: #555;
+  color: #fff;
+}
+
+.pagination-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pagination-button i {
+  font-size: 16px;
+}

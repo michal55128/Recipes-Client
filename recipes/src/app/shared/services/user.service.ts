@@ -2,13 +2,13 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { User } from '../models/user';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of, tap } from 'rxjs';
+import { log } from 'console';
 
 export interface SignResponse {
   user: User;
   token: string;
-} 
-
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -29,23 +29,45 @@ export class UserService {
   }
   public set token(token: string | null) {
     if (token) {
-      localStorage.setItem('Token',token);
+      localStorage.setItem('Token', token);
     }
   }
+  public logout() {
+    localStorage.removeItem('CurrentUser');
+    localStorage.removeItem('Token');
+  }
+  public set loginUser(user: string | null) {
+    if (user) {
+      const userData: User = JSON.parse(user);
+      this.currentUser = userData;
+      localStorage.setItem('CurrentUser', user);
+    }
+  }
+  public get getCurrentUser(): string | null {
+    return localStorage.getItem('CurrentUser');
+  }
   login(u: User) {
+    console.log(this.currentUser);
+
     return this.http.post<{ user: User; token: string }>(
       `${this.usersURL}/signIn`,
       u
     );
   }
-  register(u: User) : Observable<HttpResponse<SignResponse>>{
-    return this.http.post<SignResponse>(this.usersURL + "/signUp", u, { observe: 'response' });
+  register(u: User): Observable<HttpResponse<SignResponse>> {
+    if (u) this.loginUser = JSON.stringify(u);
+    this.currentUser = u;
+    return this.http.post<SignResponse>(this.usersURL + '/signUp', u, {
+      observe: 'response',
+    });
   }
-  getAllUsers(){
-    return this.http.get(`${this.usersURL}/`)
 
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.usersURL).pipe(
+      catchError((error) => {
+        console.error('An error occurred:', error);
+        return of([]);
+      })
+    );
   }
-
-
-
 }

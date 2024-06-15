@@ -1,0 +1,25 @@
+<div class="user-table-container">
+    <h1 class="table-title">Users - List</h1>
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>City</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        @for (user of usersList; track user._id) {
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.city }}</td>
+          <td>{{ user.role }}</td>
+        </tr>
+    }
+      </tbody>
+    </table>
+  </div>
+  

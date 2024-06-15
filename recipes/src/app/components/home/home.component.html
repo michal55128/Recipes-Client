@@ -1,1 +1,16 @@
-<p>home works!</p>
+<div class="container">
+    <h1>Welcome to Delicious Recipes!</h1>
+    <div class="recipe-gallery">
+        @for (recipe of recipes; track recipe._id) {
+            <div class="recipe-card">
+        <img [src]="recipe.image" alt="{{ recipe.name }}" (click)="viewRecipeDetails(recipe)">
+        <div class="overlay">
+          <h3>{{ recipe.name }}</h3>
+          <p>{{ recipe.description }}</p>
+        </div>
+      </div>
+        }
+    </div>
+
+  </div>
+  
