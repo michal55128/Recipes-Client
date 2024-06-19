@@ -6,7 +6,7 @@ interface layersSchema {
 }
 
 export interface Recipe {
- _id: string,
+  _id: string;
   name: string;
   description: string;
   nameCategory: string;
@@ -15,7 +15,9 @@ export interface Recipe {
   addDate: Date;
   layers: [layersSchema];
   Preparation: [string];
-  image: string;
+  // imageName: string;
+  // imageUrl: string;
+    image: string;
   isPrivate: boolean;
   user: User;
 }

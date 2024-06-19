@@ -4,11 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../shared/services/recipe.service';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { LoginComponent } from '../login/login.component';
+import { RecipestransformComponent } from '../recipestransform/recipestransform.component';
 
 @Component({
   selector: 'app-recipe-details',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe,LoginComponent,RecipestransformComponent],
   templateUrl: './recipe-details.component.html',
   styleUrl: './recipe-details.component.scss',
 })

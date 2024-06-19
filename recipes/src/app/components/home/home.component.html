@@ -1,16 +1,41 @@
 <div class="container">
-    <h1>Welcome to Delicious Recipes!</h1>
-    <div class="recipe-gallery">
-        @for (recipe of recipes; track recipe._id) {
-            <div class="recipe-card">
-        <img [src]="recipe.image" alt="{{ recipe.name }}" (click)="viewRecipeDetails(recipe)">
-        <div class="overlay">
-          <h3>{{ recipe.name }}</h3>
-          <p>{{ recipe.description }}</p>
-        </div>
+  <h1>Welcome to Delicious Recipes!</h1>
+  <div class="recipe-gallery">
+    @for (recipe of recipes; track recipe._id) {
+    <div class="recipe-card" (click)="recipeDetails(recipe._id)">
+      <img
+        [src]="recipe.image"
+        alt="{{ recipe.name }}"
+        (click)="viewRecipeDetails(recipe)"
+      />
+      <div class="overlay">
+        <h3>{{ recipe.name }}</h3>
+        <p>{{ recipe.description }}</p>
       </div>
-        }
     </div>
-
+    }
   </div>
-  
+</div>
+
+@if(showdialog){
+  <ng-container>
+    <div class="dialog-overlay">
+      <div class="dialog-content">
+        <h2 mat-dialog-title>OOPS..</h2>
+        <mat-dialog-content>
+          <p>You must be logged in to view recipe details.</p>
+          <p>
+            Please
+            <a mat-button color="primary" routerLink="/login">Login</a> or
+            <a mat-button color="primary" routerLink="/register">Register</a> to
+            continue.
+          </p>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+          <button mat-button class="action-button" (click)="closeDialog()">
+            Close
+          </button>
+        </mat-dialog-actions>
+      </div>
+    </div> </ng-container
+  >}

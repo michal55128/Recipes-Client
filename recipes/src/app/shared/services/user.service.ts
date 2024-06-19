@@ -1,9 +1,10 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { User } from '../models/user';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { log } from 'console';
+import { Recipe } from '../models/recipe';
 
 export interface SignResponse {
   user: User;
@@ -70,4 +71,5 @@ export class UserService {
       })
     );
   }
+
 }

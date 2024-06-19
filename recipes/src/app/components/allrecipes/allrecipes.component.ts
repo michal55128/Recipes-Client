@@ -60,9 +60,10 @@ export class AllrecipesComponent implements OnInit {
   selectedCategories: string[] = [];
   searchText: string = '';
   page: number = 1;
-  perPage: number = 10;
+  perPage: number = 8;
   totalPages: number = 10;
   maxtime?:number=15;
+
   ngOnInit() {
     this.onSelectionChange();
     this.loadAllRecipes();
