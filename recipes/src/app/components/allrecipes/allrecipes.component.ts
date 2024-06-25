@@ -23,6 +23,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TimePreparationPipe } from '../../shared/pipes/time-preparation.pipe';
 
 @Component({
   selector: 'app-allrecipes',
@@ -44,6 +45,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatSelectModule,
     ReactiveFormsModule,
     NgSelectModule,
+    TimePreparationPipe
   ],
   templateUrl: './allrecipes.component.html',
   styleUrl: './allrecipes.component.scss',

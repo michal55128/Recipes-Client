@@ -16,7 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogTitle,
     MatDialogContent,
     RouterOutlet,
-    RouterModule,],
+    RouterModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -27,7 +28,6 @@ export class HomeComponent implements OnInit {
   router=inject(Router);
 length:number=0;
 showdialog = false;
-
   constructor() { }
 recipeService=inject(RecipeService);
 

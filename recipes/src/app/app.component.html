@@ -39,6 +39,9 @@
     <li class="nav-item">
       <a   routerLink="addRecipe"  routerLinkActive="active">Add-Recipe</a>
     </li>
+    <li class="nav-item">
+      <a   routerLink="recipe-form"  routerLinkActive="active">Add-Recipe</a>
+    </li>
       @if (userService.currentUser?.role === 'admin') {
       <li class="nav-item">
         <a routerLink="allusere" routerLinkActive="active">All-Users</a>
@@ -87,3 +90,7 @@
 </header>
 
 <router-outlet></router-outlet>
+
+<div class="footer">
+  © 2024 Michal Recipes 
+</div>

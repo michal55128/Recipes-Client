@@ -1,0 +1,211 @@
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+  <h1>Recipe-Form</h1>
+  <div>
+    <label>Name:</label>
+    <input formControlName="name" type="text" />
+    <div *ngIf="recipeForm.get('name')?.errors && (recipeForm.get('name')?.dirty || recipeForm.get('name')?.touched)">
+    <div *ngIf="recipeForm.get('name')?.hasError('pattern')">
+      Name must contain at least 2 characters
+    </div>
+    <div *ngIf="recipeForm.get('name')?.hasError('required')">
+        Name is required
+      </div>
+    </div>
+ 
+  </div>
+
+  <div>
+    <label>Description:</label>
+    <textarea formControlName="description"></textarea>
+    <div  class="error"
+    *ngIf="recipeForm.get('description')?.errors && (recipeForm.get('description')?.dirty || recipeForm.get('description')?.touched)">
+
+    <div
+      class="error"
+      *ngIf="recipeForm.get('description')?.hasError('pattern')"
+    >
+      Description must contain at least 2 characters
+    </div>
+    <div *ngIf="recipeForm.get('description')?.hasError('required')">
+        Description is required
+      </div>
+  </div>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Select Category</mat-label>
+    <mat-select
+      [(ngModel)]="recipeForm.value.nameCategory"
+      formControlName="nameCategory"
+    >
+      @for(category of categoryList; track category){
+      <mat-option [value]="category.description">{{
+        category.description
+      }}</mat-option>
+      }
+    </mat-select>
+    <div
+      class="error"
+      *ngIf="
+        recipeForm.get('categories')?.hasError('required') &&
+        recipeForm.get('categories')?.touched
+      "
+    >
+      Select at least one category
+    </div>
+  </mat-form-field>
+
+  <div formArrayName="newCategories">
+    <button type="button" (click)="newCategoryAdd()">Add New Category</button>
+  </div>
+  @if(newCategory){
+  <div>
+    <label>Category Name:</label>
+    <input formControlName="nameCategory" type="text" />
+    <div *ngIf="recipeForm.get('categoryName')?.errors && (recipeForm.get('categoryName')?.dirty || recipeForm.get('categoryName')?.touched)">
+
+    <div
+      class="error"
+      *ngIf="recipeForm.get('categoryName')?.hasError('pattern')"
+    >
+      Name category must contain at least 2 characters
+    </div>
+    <div *ngIf="recipeForm.get('categoryName')?.hasError('required')">
+        Name category is required
+      </div>
+    </div>
+  </div>
+  }
+  <div>
+    <label>Preparation Time (minutes):</label>
+    <input formControlName="preparationTimeInMinute" type="number" />
+    <div *ngIf="recipeForm.get('preparationTimeInMinute')?.errors && (recipeForm.get('preparationTimeInMinute')?.dirty || recipeForm.get('preparationTimeInMinute')?.touched)">
+        <div *ngIf="recipeForm.get('preparationTimeInMinute')?.hasError('required')">
+            Preparation Time is required
+          </div>
+</div>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Select Difficulty Level</mat-label>
+    <mat-select [(ngModel)]="recipeForm.value.level" formControlName="level">
+      @for(level of levels; track level){
+      <mat-option [value]="level">{{ level }}</mat-option>
+
+      }
+    </mat-select>
+    <div
+      class="error"
+      *ngIf="
+        recipeForm.get('level')?.hasError('required') &&
+        recipeForm.get('level')?.touched
+      "
+    >
+      Select one level
+    </div>
+  </mat-form-field>
+
+  <div>
+    <label>Image URL:</label>
+    <input formControlName="image" type="text" />
+  </div>
+
+  <div class="checkbox-container">
+    <label for="isPrivate">Is Private</label>
+    <input type="checkbox" id="isPrivate" formControlName="isPrivate" />
+  </div>
+
+  <div formArrayName="layers">
+    <div
+      *ngFor="let layer of layers.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <label>Layer Description:</label>
+      <input formControlName="description" type="text" />
+
+      <div formArrayName="components">
+        <div
+          *ngFor="
+            let component of getFormArray(layer.get('components')).controls;
+            let j = index
+          "
+        >
+          <label>Component:</label>
+          <input
+            formControlName="component"
+            type="text"
+            (input)="onComponentInput(i, j)"
+          />
+        </div>
+      </div>
+      <div
+        class="error"
+        *ngIf="
+          recipeForm.get('layers')?.hasError('nonEmptyIngredients') &&
+          recipeForm.get('layers')?.touched
+        "
+      >
+        Each layer must have at least one non-empty ingredient
+      </div>
+
+      <button type="button" (click)="removeLayer(i)">Remove Layer</button>
+    </div>
+    <button type="button" (click)="addLayer()">Add Layer</button>
+  </div>
+
+  <div formArrayName="Preparation">
+    <div
+      *ngFor="let step of preparation.controls; let k = index"
+      [formGroupName]="k"
+    >
+      <label>Preparation Step:</label>
+      <input
+        formControlName="step"
+        type="text"
+        (input)="onPreparationInput(k)"
+      />
+      <button type="button" (click)="removePreparationStep(k)">
+        Remove Step
+      </button>
+    </div>
+    <button type="button" (click)="addPreparationStep()">
+      Add Preparation Step
+    </button>
+    <div
+      class="error"
+      *ngIf="
+        recipeForm
+          .get('preparation')
+          ?.hasError('nonEmptyPreparationInstructions') &&
+        recipeForm.get('preparationInstructions')?.touched
+      "
+    >
+      Each step must have at least one non-empty instruction
+    </div>
+  </div>
+
+  <button type="submit">Submit Recipe</button>
+  <div *ngIf="recipeForm.invalid" class="error">Form is invalid</div>
+</form>
+
+@if(showdialog){
+    <ng-container>
+      <div class="dialog-overlay">
+        <div class="dialog-content">
+          <h2 mat-dialog-title>Thank you!</h2>
+          <mat-dialog-content>
+            <p>The Recipe added succecfuliiy</p>
+            <p>
+                Please, for 
+              <a mat-button color="primary" routerLink="/allrecipes">All-Recipes</a> 
+              details
+            </p>
+          </mat-dialog-content>
+          <mat-dialog-actions>
+            <button mat-button class="action-button" (click)="closeDialog()">
+              Close
+            </button>
+          </mat-dialog-actions>
+        </div>
+      </div> </ng-container
+    >}

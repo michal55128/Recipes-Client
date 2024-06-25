@@ -1,0 +1,295 @@
+form {
+  max-width: 600px;
+  margin: auto;
+  display: grid;
+  gap: 10px;
+}
+
+div {
+  display: grid;
+  gap: 5px;
+}
+
+label {
+  font-weight: bold;
+}
+
+textarea,
+input[type="text"],
+input[type="number"],
+input[type="date"],
+mat-form-field,
+mat-checkbox {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  background-color: #ffc107;
+  color: #000;
+}
+
+button[type="button"] {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-checkbox-label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.mat-checkbox-layout {
+  display: flex;
+  align-items: center;
+}
+
+.mat-checkbox-inner-container {
+  flex-shrink: 0;
+}
+
+.mat-checkbox-input {
+  margin: 0;
+}
+
+.mat-checkbox-layout.mat-checkbox-required {
+  justify-content: space-between;
+}
+
+.mat-checkbox.mat-checkbox.mat-primary {
+  margin-top: 0;
+  margin-right: 0.5rem;
+}
+
+/* Delete button style */
+.delete-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.delete-button-container {
+  text-align: right;
+  margin-top: -10px; /* Adjust as needed */
+}
+
+.delete-button-container button {
+  margin-left: 10px;
+}
+
+button:disabled {
+  opacity: 0.6; /* קידום עודף אפקט חסר */
+  cursor: not-allowed; /* כדי ש אך כן יהיה יתר */
+}
+.error {
+  color: red; /* צבע טקסט */
+  font-size: 14px; /* גודל גופן */
+  margin-top: 5px; /* יתיש איש עסק מ */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  div {
+    width: 100%;
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    mat-select {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: #ffc107;
+        outline: none;
+      }
+    }
+
+    .error {
+      color: #d9534f;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #ffc107;
+      color: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #ffca28;
+      }
+    }
+  }
+
+  button[type="submit"] {
+    margin-top: 20px;
+    background-color: #333;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #ffca28;
+      color: #333;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .error {
+    text-align: center;
+    color: #ffc107;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+}
+
+.error {
+  text-align: center;
+  color: #d9534f;
+  margin-top: 10px;
+  font-size: 14px;
+}
+.checkbox-container {
+  display: flex;
+  align-items: center;
+
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+
+    &:checked {
+      background-color: #ffc107;
+      border-color: #ffc107;
+    }
+
+    &:hover {
+      border-color: #ffc107;
+    }
+  }
+
+  label {
+    margin-left: 10px;
+    font-size: 16px;
+    color: #000;
+  }
+}
+
+
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* אפור חשוף */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .dialog-content {
+    background-color: #1e1e1e; /* אפור שחור */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    color: #fff; /* לבן */
+  }
+  
+  .dialog-content h2 {
+    color: #ffcc00; /* צהוב */
+    margin-bottom: 10px;
+  }
+  
+  .dialog-content mat-dialog-content {
+    margin-bottom: 20px;
+  }
+  
+.login-link,
+.register-link {
+  color: #ffcc00; /* צהוב */
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.action-button.mat-button {
+  background-color: #fbc02d; 
+    color: #1e1e1e; 
+}
+.action-button{
+  color: #f0f0f0 !important;
+  background-color: #444444;
+}
+a{
+ color: #fbc02d !important;
+}

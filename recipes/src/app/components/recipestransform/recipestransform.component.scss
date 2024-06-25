@@ -1,0 +1,245 @@
+// // .recipe-carousel {
+// //     display: flex;
+// //     flex-wrap: wrap;
+// //     justify-content: center;
+// //     gap: 20px;
+// //   }
+  
+// //   .recipe-card {
+// //     width: 300px;
+// //     padding: 20px;
+// //     border: 1px solid #ccc;
+// //     border-radius: 8px;
+// //     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+// //     overflow: hidden;
+// //     transition: transform 0.5s ease-in-out;
+// //   }
+  
+// //   .recipe-card:hover {
+// //     transform: rotate(10deg);
+// //   }
+  
+// //   .recipe-details {
+// //     margin-top: 10px;
+// //   }
+  
+// //   .recipe-details h3 {
+// //     font-size: 1.2rem;
+// //     margin-bottom: 10px;
+// //   }
+  
+// //   .recipe-details p {
+// //     font-size: 0.9rem;
+// //     margin-bottom: 5px;
+// //   }
+  
+// //   .recipe-details button {
+// //     background-color: #f0ad4e;
+// //     color: white;
+// //     border: none;
+// //     padding: 8px 12px;
+// //     cursor: pointer;
+// //     border-radius: 4px;
+// //   }
+  
+// //   .recipe-details button:hover {
+// //     background-color: #ec971f;
+// //   }
+// .recipe-carousel {
+//     position: relative;
+//     width: 100%;
+//     overflow: hidden;
+//     margin: 20px 0;
+//   }
+  
+//   .recipe-cards-container {
+//     display: flex;
+//     transition: transform 0.5s ease-in-out;
+//   }
+  
+//   .recipe-cards {
+//     display: flex;
+//     gap: 20px;
+//   }
+  
+//   .recipe-card {
+//     width: 300px;
+//     padding: 20px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//     overflow: hidden;
+//   }
+  
+//   .recipe-card img {
+//     width: 100%;
+//     height: auto;
+//     border-radius: 8px;
+//   }
+  
+//   .recipe-details {
+//     margin-top: 10px;
+//   }
+  
+//   .recipe-details h3 {
+//     font-size: 1.2rem;
+//     margin-bottom: 10px;
+//   }
+  
+//   .recipe-details p {
+//     font-size: 0.9rem;
+//     margin-bottom: 5px;
+//   }
+  
+//   .recipe-details button {
+//     background-color: #f0ad4e;
+//     color: white;
+//     border: none;
+//     padding: 8px 12px;
+//     cursor: pointer;
+//     border-radius: 4px;
+//   }
+  
+//   .recipe-details button:hover {
+//     background-color: #ec971f;
+//   }
+  
+//   .arrow {
+//     position: absolute;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     cursor: pointer;
+//     font-size: 24px;
+//     background-color: rgba(255, 255, 255, 0.5);
+//     color: #333;
+//     padding: 10px;
+//     border-radius: 50%;
+//     transition: background-color 0.3s ease;
+//   }
+  
+//   .arrow:hover {
+//     background-color: rgba(255, 255, 255, 0.8);
+//   }
+  
+//   .left {
+//     left: 10px;
+//   }
+  
+//   .right {
+//     right: 10px;
+//   }
+
+
+.recipe-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  
+  .recipe-cards-container {
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .recipe-cards {
+    display: flex;
+    transition: transform 0.3s ease-in-out; /* Faster transition */
+  }
+  
+  .recipe-card {
+    width: 320px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-right: 20px; /* Adjust margin as needed */
+  }
+  
+  .recipe-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .recipe-details {
+    margin-top: 10px;
+  }
+  
+  .recipe-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .recipe-details p {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+  
+  .recipe-details button {
+    background-color: #f0ad4e;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .recipe-details button:hover {
+    background-color: #ec971f;
+  }
+
+  
+
+ 
+  .recipe-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  
+  .arrows-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .arrow {
+    cursor: pointer;
+    font-size: 24px;
+    background-color:#f0ad4e;    color: #333;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    margin: 0 10px; 
+  }
+  
+  .arrow:hover {
+    background-color:#333;
+    color: #ec971f;
+
+  }
+  .icon {
+    vertical-align: middle; /* או top, bottom, בהתאם למה שמתאים */
+}
+
+  .circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid black;
+    background-color: white;
+    display: inline-block;
+  }
+  
+  .circle.active {
+    background-color: black;
+  }
+  

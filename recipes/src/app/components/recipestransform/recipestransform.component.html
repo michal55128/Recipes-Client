@@ -1,0 +1,40 @@
+<div class="recipe-carousel">
+  <div class="arrows-container">
+    <div class="left arrow" (click)="moveLeft()">&lt;</div>
+    <div class="right arrow" (click)="moveRight()">&gt;</div>
+  </div>
+  <div class="recipe-cards-container">
+    <div
+      class="recipe-cards"
+      [style.transform]="'translateX(' + position + 'px)'"
+    >
+      @for (recipe of recipes; track recipe._id) {
+      <div class="recipe-card">
+        <img [src]="recipe.image" alt="Recipe Image" />
+        <div class="recipe-details">
+          <h3>{{ recipe.name }}</h3>
+          <p>
+            {{ recipe.description }}<br /><br />
+            <mat-icon class="icon">alarm</mat-icon>
+            {{ recipe?.preparationTimeInMinute | timePreparation }}
+            <br /><br />
+          </p>
+
+          <div>
+            <i class="fa fa-signal"></i> Level: @for(i of levels;track i){
+            <div
+              [appLevelRepeat]="{ index: i, level: recipe.level }"
+              class="circle"
+            ></div>
+            }
+          </div>
+          <br />
+
+          <button (click)="recipeDetails(recipe._id)">View Details</button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+<div><br /></div>

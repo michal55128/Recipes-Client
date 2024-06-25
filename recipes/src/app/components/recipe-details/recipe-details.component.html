@@ -4,9 +4,14 @@
     <div class="recipe-detail">
         
         <div class="share-recipe">
-          <button class="share-button">
-            <i class="fa fa-share-alt"></i> Share Recipe
+          <button class="share-button" (click)="copyToClipboard()">
+                    <mat-icon class="share-icon">share</mat-icon>
+             Share Recipe
           </button>
+          @if(copyMessage){
+            <p  class="copy-message">{{ copyMessage }}</p>
+        }  
+
         </div>
       </div>
   <h1>{{ recipe.name }}</h1>
@@ -17,12 +22,16 @@
     <p><i class="fa fa-tag"></i> Category: {{ recipe.nameCategory }}</p>
     <p>
       <i class="fa fa-clock"></i> Preparation Time:
-      {{ recipe.preparationTimeInMinute }} minutes
+           {{recipe?.preparationTimeInMinute|timePreparation}}
     </p>
-    <p>
+
+    <div>
       <i class="fa fa-signal"></i> Level:
-      <span [innerHTML]="getLevelIcons(recipe.level)"></span>
-    </p>
+    @for(i of levels;track i){
+     <div  [appLevelRepeat]="{ index: i, level: recipe.level }" class="circle"></div>
+}
+    </div><br/>
+
     <p><i class="fa fa-user"></i> Added by: {{ recipe.user.name }}</p>
   </div>
 

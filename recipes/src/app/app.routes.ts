@@ -8,6 +8,7 @@ import { RecipeDetailsComponent } from './components/recipe-details/recipe-detai
 import { AllUsersComponent } from './components/all-users/all-users.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { isAdminGuard } from './shared/guards/is-admin.guard';
+import { AboutComponent } from './components/about/about.component';
 
 export const routes: Routes = [
     {path: '', loadComponent: () => import('./components/home/home.component').then(c => c.HomeComponent), pathMatch: 'full' },
@@ -18,5 +19,8 @@ export const routes: Routes = [
     { path: 'allusere',canActivate: [isAdminGuard], loadComponent: () => import('./components/all-users/all-users.component').then(c => c.AllUsersComponent)},
     { path: 'addRecipe',canActivate: [authGuard], loadComponent: () => import('./components/formrecipe/formrecipe.component').then(c => c.FormrecipeComponent) },
     { path: 'recipeTransform',canActivate: [authGuard], loadComponent: () => import('./components/recipestransform/recipestransform.component').then(c => c.RecipestransformComponent) },
+    { path: 'recipe-form',canActivate: [authGuard], loadComponent: () => import('./components/recipe-form/recipe-form.component').then(c => c.RecipeFormComponent) },
+    { path: 'about',  loadComponent: () => import('./components/about/about.component').then(c => c.AboutComponent) },
+    { path: 'recipe/:id', component: RecipeDetailsComponent },
 
 ];

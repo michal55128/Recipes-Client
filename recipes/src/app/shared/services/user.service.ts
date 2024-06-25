@@ -44,9 +44,14 @@ export class UserService {
       localStorage.setItem('CurrentUser', user);
     }
   }
-  public get getCurrentUser(): string | null {
-    return localStorage.getItem('CurrentUser');
+  // public get getCurrentUser(): string | null {
+  //   return localStorage.getItem('CurrentUser');
+  // }
+  getCurrentUser(): User | null {
+    const userData = localStorage.getItem('CurrentUser');
+    return userData ? JSON.parse(userData) : null;
   }
+
   login(u: User) {
     console.log(this.currentUser);
 

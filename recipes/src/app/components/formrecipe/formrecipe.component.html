@@ -1,0 +1,237 @@
+<form [formGroup]="recipeForm" (ngSubmit)="addRecipe()" class="recipe-form">
+  <div class="form-row">
+    <h2>Add-Recipe</h2>
+    <div class="form-field">
+      <label for="name">Recipe Name</label>
+      <input formControlName="name" id="name" type="text" />
+      <div class="error" *ngIf="recipeForm.get('name')?.hasError('pattern')">
+        Name must contain at least 2 characters
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="description">Description</label>
+      <textarea formControlName="description" id="description"></textarea>
+      <div
+        class="error"
+        *ngIf="recipeForm.get('description')?.hasError('pattern')"
+      >
+        Description must contain at least 2 characters
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="form-field">
+      <label for="categories">Categories</label>
+      <select formControlName="categories" id="categories" (selectionChange)="onCategoryChange($event)" formControlName="categories" multiple>
+        <option *ngFor="let c of categoryList" [value]="c._id">{{ c.description }}</option>
+        <option value="Other">Other</option>
+      </select>
+      <div class="error" *ngIf="recipeForm.get('categories')?.hasError('required') && recipeForm.get('categories')?.touched">Select at least one category</div>
+    </div> -->
+
+  <!-- <div class="selected-categories-container">
+    <h3>Selected Categories:</h3>
+    <ul>
+      @for(category of categoryList; track category){
+      <li>{{ getCategoryDescription(category.description) }}</li>
+      }
+    </ul>
+    <div
+      class="error"
+      *ngIf="
+        recipeForm.get('categories')?.hasError('required') &&
+        recipeForm.get('categories')?.touched
+      "
+    >
+      Select at least one category
+    </div>
+  </div> -->
+
+  <mat-form-field>
+    <mat-label>Select Category</mat-label>
+    <mat-select>
+      @for(category of categoryList; track category){
+      <mat-option [value]="category._id">{{ category.description }}</mat-option>
+      }
+    </mat-select>
+    <div
+      class="error"
+      *ngIf="
+        recipeForm.get('categories')?.hasError('required') &&
+        recipeForm.get('categories')?.touched
+      "
+    >
+      Select at least one category
+    </div>
+  </mat-form-field>
+
+  <div formArrayName="newCategories">
+    <button (click)="newCategory = !newCategories">addNewCategory</button>
+  </div>
+  @if(newCategory){
+  <div class="form-field">
+    <label for="name">New-category </label>
+    <input formControlName="new-category" id="new-category" type="text">
+    <div
+      class="error"
+      *ngIf="recipeForm.get('categoryName')?.hasError('pattern')"
+    >
+      Name category must contain at least 2 characters
+    </div>
+  </div>
+  }
+  <!-- <mat-accordion *ngIf="showNewCategoryInput" class="example-headers-align" multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>new-category  </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header> -->
+  <!-- <div formArrayName="newCategories">
+          @for(c of newCategories.controls; track index){
+          <div>
+            <mat-form-field [formGroupName]="index">
+              <mat-label>{{ index + 1 }}</mat-label>
+              <input formControlName="name" matInput (input)="onCategoriesInput(index)">
+            </mat-form-field>
+          </div>
+        }
+          <button *ngIf="showNewCategoryInput" mat-button (click)="addNewCategory()">אישור</button>
+        </div> -->
+  <!-- </mat-expansion-panel>
+    </mat-accordion> -->
+
+  <div class="form-field">
+    <label for="difficulty">Difficulty Level</label>
+    <select formControlName="difficulty" id="difficulty">
+      <option *ngFor="let d of levels; let i = index" [value]="i + 1">
+        {{ d }}
+      </option>
+    </select>
+    <div
+      class="error"
+      *ngIf="
+        recipeForm.get('difficulty')?.hasError('required') &&
+        recipeForm.get('difficulty')?.touched
+      "
+    >
+      Select a difficulty level
+    </div>
+  </div>
+
+  <div class="form-section">
+    <label for="preparationTime">Preparation Time</label>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="preparationHours">Hours</label>
+        <input
+          formControlName="preparationHours"
+          id="preparationHours"
+          type="number"
+          min="0"
+        />
+      </div>
+      <div class="form-field">
+        <label for="preparationMinutes">Minutes</label>
+        <input
+          formControlName="preparationMinutes"
+          id="preparationMinutes"
+          type="number"
+          min="0"
+        />
+      </div>
+    </div>
+    <div
+      class="error"
+      *ngIf="
+        recipeForm.get('preparationHours')?.hasError('min') &&
+        recipeForm.get('preparationHours')?.touched &&
+        recipeForm.get('preparationMinutes')?.hasError('min') &&
+        recipeForm.get('preparationMinutes')?.touched
+      "
+    >
+      Enter preparation time
+    </div>
+  </div>
+
+  <!-- <div formArrayName="layers">
+    <div *ngFor="let layer of layers.controls; let layerIndex = index" [formGroupName]="layerIndex" class="form-layer">
+      <div class="form-field">
+        <label>Layer Name</label>
+        <input formControlName="description" type="text">
+      </div>
+      <div formArrayName="ingredients">
+        <div *ngFor="let ingredient of getIngredients(layer).controls; let ingredientIndex = index" [formGroupName]="ingredientIndex" class="form-field">
+          <label>Component {{ ingredientIndex + 1 }}</label>
+          <input formControlName="name" type="text" (input)="onIngredientInput(layerIndex, ingredientIndex)">
+        </div>
+      </div>
+      <button type="button" (click)="addLayer()">Add Layer</button>
+      <button type="button" (click)="removeLayer(layerIndex)" *ngIf="layers.length > 1">Remove Layer</button>
+    </div>
+    <div class="error" *ngIf="recipeForm.get('layers')?.hasError('nonEmptyIngredients') && recipeForm.get('layers')?.touched">Each layer must have at least one non-empty ingredient</div>
+  </div> -->
+  <!-- 
+  <div formArrayName="layers">
+    <div *ngFor="let layer of layers.controls; let layerIndex = index" [formGroupName]="layerIndex" class="form-layer">
+      <div class="form-field">
+        <label>Layer Name</label>
+        <input formControlName="description" type="text">
+      </div>
+      <div formArrayName="components">
+        <div *ngFor="let component of getComponents(layer).controls; let componentIndex = index" [formGroupName]="componentIndex" class="form-field">
+          <label>Component {{ componentIndex + 1 }}</label>
+          <input formControlName="name" type="text">
+        </div>
+        <button type="button" (click)="addComponent(layerIndex)">Add Component</button>
+        <button type="button" (click)="removeComponent(layerIndex, componentIndex)" *ngIf="getComponents(layer).length > 1">Remove Component</button>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- <div formArrayName="preparationInstructions">
+    <label>Preparation Instructions</label>
+    <div *ngFor="let instruction of instructions.controls; let i = index" [formGroupName]="i" class="form-field">
+      <label>{{ i + 1 }}</label>
+      <input formControlName="step" type="text" (input)="onInstructionInput(i)">
+    </div>
+    <div class="error" *ngIf="recipeForm.get('preparationInstructions')?.hasError('nonEmptyPreparationInstructions') && recipeForm.get('preparationInstructions')?.touched">Each step must have at least one non-empty instruction</div>
+  </div> -->
+
+  <div class="form-field">
+    <label for="image">Image URL</label>
+    <input
+      formControlName="image"
+      type="file"
+      id="image"
+      (change)="onFileSelected($event)"
+    />
+  </div>
+  <div *ngIf="selectedImage" class="image-container">
+    <img [src]="selectedImage" alt="Selected Image" class="selected-image" />
+  </div>
+
+  <div class="form-section">
+    <label>Is Private</label>
+    <div class="form-field">
+      <input
+        formControlName="isPrivate"
+        type="radio"
+        value="no"
+        id="private-no"
+      />
+      <label for="private-no">No</label>
+      <input
+        formControlName="isPrivate"
+        type="radio"
+        value="yes"
+        id="private-yes"
+      />
+      <label for="private-yes">Yes</label>
+    </div>
+  </div>
+
+  <button type="submit" *ngIf="!isUpdateMode">Add Recipe</button>
+  <!-- <button type="button" (click)="updateRecipe()" *ngIf="isUpdateMode">Update Recipe</button> -->
+  <div *ngIf="recipeForm.invalid" class="error">Form is invalid</div>
+</form>

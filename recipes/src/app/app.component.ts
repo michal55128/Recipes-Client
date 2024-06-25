@@ -23,9 +23,9 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
   ngOnInit() {
     {
-      const currentUserString = this.userService.getCurrentUser;
-      if (currentUserString) {
-        this.currentUser = JSON.parse(currentUserString);
+      let currntUser: User | null = this.userService.getCurrentUser();
+      if (currntUser) {
+        // this.currentUser = JSON.parse(currntUser);
         console.log('currentUser' + this.currentUser);
         this.isManager = this.currentUser.role == 'admin';
         this.isConected = true;

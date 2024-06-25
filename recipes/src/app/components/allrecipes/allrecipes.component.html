@@ -7,6 +7,8 @@
 
 <div class="content">
   <div class="search-container">
+    <button class="searchButton" (click)="searchRecipes()">Cancel</button>
+
     <button class="searchButton" (click)="searchRecipes()">Search</button>
 
 
@@ -102,7 +104,7 @@
           <p>
             {{ recipe.description }}<br /><br />
             <mat-icon class="icon">alarm</mat-icon>
-            {{ recipe.preparationTimeInMinute }} minutes<br /><br />
+            {{ recipe.preparationTimeInMinute |timePreparation}} <br /><br />
             <span [innerHTML]="getLevelIcons(recipe.level)"></span>
           </p>
           <ng-template pTemplate="footer">

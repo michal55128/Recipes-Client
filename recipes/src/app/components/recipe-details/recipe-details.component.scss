@@ -378,3 +378,29 @@ $background-color: #333; // Slightly different background color
   font-size: 1.1rem;
   line-height: 1.6;
 }
+
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid black;
+  display: inline-block;
+}
+
+.circle.active {
+  background-color: black;
+}
+
+.copy-message {
+  color: #333;
+  font-size: 14px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.share-icon {
+  position: relative;
+  top: 4px; 
+}
