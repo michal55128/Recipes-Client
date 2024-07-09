@@ -46,63 +46,79 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // getUserIcon(): string {
-  //   if (!this.currentUser) {
-  //     return 'person_outline';
-  //   } else if (this.currentUser.role === 'admin') {
-  //     return 'verified_user';
-  //   } else {
-  //     return 'person';
-  //   }
-  // }
 
+  isAdmin(): boolean {
+    let currntUser: User | null = this.userService.getCurrentUser();
+    if (currntUser?.role === 'admin') {
+      return true;
+    }
+    return false;
+  }
+  currentUserDetails(): string {
+    let currntUser: User | null = this.userService.getCurrentUser();
+
+    if (this.userService.token) {
+      return 'hi, ' + currntUser?.username;
+    } else {
+      return 'guest';
+    }
+  }
   getUserIcon(): string {
-    const user = this.currentUser;
-    if (user.role === 'user') {
+    let currntUser: User | null = this.userService.getCurrentUser();
+
+    if (currntUser?.role === 'user') {
       return 'person';
-    } else if (user.role === 'admin') {
+    } else if (currntUser?.role === 'admin') {
       return 'admin_panel_settings';
     } else {
       return 'person_outline';
     }
   }
 
-  logout() {   
-     this.router.navigate(["/"]);
-
+  logout() {
+    this.router.navigate(['/']);
     this.userService.logout();
     this.isConected = !this.isConected;
   }
- 
+
   login() {
     this.isConected = !this.isConected;
   }
 
   showProfile: boolean = false;
   showLogin: boolean = true;
+
   toggleProfile() {
     this.showProfile = !this.showProfile;
+    if(this.userService.token){
+      this.showLogin=false;
+    }
+    else{
+      this.showLogin=true;
+    }
   }
   showLoginUser() {
-    this.showLogin=!this.showLogin;
+    this.showLogin = !this.showLogin;
   }
   getUser() {
     return this.currentUser;
   }
   loginUser() {
     this.router.navigate(['login']);
-    this.showLogin=false;
+    this.showProfile=false;
+    // this.showLogin = false;
   }
   registerUser() {
     this.router.navigate(['register']);
-    this.showLogin=false;
+    this.showProfile=false;
 
+    // this.showLogin = false;
   }
   logOut() {
     this.userService.logout();
     this.currentUser = {};
     this.isConected = !this.isConected;
     this.showProfile = false;
-    this.showLogin=true;
+    this.showLogin = true;
   }
 }

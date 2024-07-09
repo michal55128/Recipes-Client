@@ -4,17 +4,7 @@
  </ul>
 </nav> 
 <header>
-  <!-- <div class="logo-container">
-    <a routerLink="/">
-      <img src="assets/logo8.jpeg" alt="Logo" class="logo-img">
-    </a>
-  </div> -->
   <nav class="navbar">
-    <!-- <li class="nav-item logo">
-      <a  routerLink="/">
-        <img src="assets/logo8.jpeg" alt="Logo" class="logo-img">
-      </a>
-    </li> -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a routerLink="/" routerLinkActive="active">Home</a>
@@ -23,68 +13,63 @@
         <a routerLink="/about" routerLinkActive="active">About</a>
       </li>
       <li class="nav-item">
-        <a routerLink="/allrecipes" routerLinkActive="active">AllRecipes</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/contact" routerLinkActive="active">Contact</a>
+        <a routerLink="/allrecipes" routerLinkActive="active">All-Recipes</a>
       </li>
       @if (!userService.token) {
       <li class="nav-item">
-        <a  routerLink="login" (click)="logout()"  routerLinkActive="active">Login</a>
+        <a  routerLink="login"  routerLinkActive="active">Login</a>
       </li>
       <li class="nav-item">
         <a   routerLink="register"  routerLinkActive="active">Register</a>
       </li>
     }
-    <li class="nav-item">
-      <a   routerLink="addRecipe"  routerLinkActive="active">Add-Recipe</a>
-    </li>
+    @if(userService.token){
     <li class="nav-item">
       <a   routerLink="recipe-form"  routerLinkActive="active">Add-Recipe</a>
     </li>
-      @if (userService.currentUser?.role === 'admin') {
+    <li class="nav-item">
+      <a   routerLink="myRecipes"  routerLinkActive="active">My-Recipes</a>
+    </li>
+    <li class="nav-item">
+      <a (click)="logout()" routerLinkActive="active">Log-out</a>
+    </li>
+  }
+
+      @if (isAdmin()) {
       <li class="nav-item">
         <a routerLink="allusere" routerLinkActive="active">All-Users</a>
       </li>
     }
 
-    <!-- @if (!isConected) {
-      <li class="nav-item">
-        <a (click)="logout()" routerLinkActive="active">Logout</a>
-      </li>
-    } -->
-
-
+<div  style="color: white; position: absolute; right: 5%">{{currentUserDetails()}}</div>
    <mat-icon class="nav-icon"   [style.cursor]="currentUser ? 'pointer' : 'default'"
    style="color: white; position: absolute; right: 2%;"  (click)="toggleProfile()">
-    {{ getUserIcon() }}
+   {{getUserIcon() }}
   </mat-icon>
 
   @if(showProfile){
     <mat-card class="profile-container">
       <mat-card-content class="profile-details">
-        <button class="close-button" (click)="toggleProfile()">×</button>
+        <button class="close-button" (click)="toggleProfile()">×</button>    
+    @if(!showLogin){
         <div class="profile-header">
           <div class="profile-info">
-            <p><strong>Username: {{userService.currentUser?.username }}</strong></p>
-            <p><strong>City: {{ userService.currentUser?.city }}</strong></p>
-            <p><strong>Email: {{ userService.currentUser?.email }}</strong></p>
-            <p><strong>Role: {{ userService.currentUser?.role }}</strong></p>
+            <p><strong>Username:  {{userService.currentUser?.username }}</strong></p>
+            <p><strong>City:  {{ userService.currentUser?.city }}</strong></p>
+            <p><strong>Email:  {{ userService.currentUser?.email }}</strong></p>
+            <p><strong>Role:  {{ userService.currentUser?.role }}</strong></p>
           </div>
         </div>
         <button mat-button class="logout-button" (click)="logOut()">Logout</button>
+      }
+      @if(showLogin){
+        <button mat-button class="logout-button" (click)="loginUser()">Login</button><br/>
+        <button mat-button class="logout-button" (click)="registerUser()">register</button>
+      }
       </mat-card-content>
     </mat-card>
 }
-@if(showLogin){
-  <mat-card class="profile-container">
-    <mat-card-content class="profile-details">
-      <button class="close-button" (click)="showLoginUser()">×</button>
-      <button mat-button class="logout-button" (click)="loginUser()">Login</button><br/>
-      <button mat-button class="logout-button" (click)="registerUser()">register</button>
-    </mat-card-content>
-  </mat-card>
-}
+
     </ul>
   </nav>
 </header>

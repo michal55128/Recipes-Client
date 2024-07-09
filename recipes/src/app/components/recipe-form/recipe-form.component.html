@@ -3,33 +3,51 @@
   <div>
     <label>Name:</label>
     <input formControlName="name" type="text" />
-    <div *ngIf="recipeForm.get('name')?.errors && (recipeForm.get('name')?.dirty || recipeForm.get('name')?.touched)">
-    <div *ngIf="recipeForm.get('name')?.hasError('pattern')">
-      Name must contain at least 2 characters
-    </div>
-    <div *ngIf="recipeForm.get('name')?.hasError('required')">
+    <div
+      *ngIf="
+        recipeForm.get('name')?.errors &&
+        (recipeForm.get('name')?.dirty || recipeForm.get('name')?.touched)
+      "
+    >
+      <div
+        *ngIf="recipeForm.get('name')?.hasError('pattern')"
+        class="error-message"
+      >
+        Name must contain at least 2 characters
+      </div>
+      <div
+        *ngIf="recipeForm.get('name')?.hasError('required')"
+        class="error-message"
+      >
         Name is required
       </div>
     </div>
- 
   </div>
 
   <div>
     <label>Description:</label>
     <textarea formControlName="description"></textarea>
-    <div  class="error"
-    *ngIf="recipeForm.get('description')?.errors && (recipeForm.get('description')?.dirty || recipeForm.get('description')?.touched)">
-
     <div
       class="error"
-      *ngIf="recipeForm.get('description')?.hasError('pattern')"
+      *ngIf="
+        recipeForm.get('description')?.errors &&
+        (recipeForm.get('description')?.dirty ||
+          recipeForm.get('description')?.touched)
+      "
     >
-      Description must contain at least 2 characters
-    </div>
-    <div *ngIf="recipeForm.get('description')?.hasError('required')">
+      <div
+        class="error-message"
+        *ngIf="recipeForm.get('description')?.hasError('pattern')"
+      >
+        Description must contain at least 2 characters
+      </div>
+      <div
+        *ngIf="recipeForm.get('description')?.hasError('required')"
+        class="error-message"
+      >
         Description is required
       </div>
-  </div>
+    </div>
   </div>
 
   <mat-form-field>
@@ -45,7 +63,7 @@
       }
     </mat-select>
     <div
-      class="error"
+      class="error-message"
       *ngIf="
         recipeForm.get('categories')?.hasError('required') &&
         recipeForm.get('categories')?.touched
@@ -62,15 +80,23 @@
   <div>
     <label>Category Name:</label>
     <input formControlName="nameCategory" type="text" />
-    <div *ngIf="recipeForm.get('categoryName')?.errors && (recipeForm.get('categoryName')?.dirty || recipeForm.get('categoryName')?.touched)">
-
     <div
-      class="error"
-      *ngIf="recipeForm.get('categoryName')?.hasError('pattern')"
+      *ngIf="
+        recipeForm.get('categoryName')?.errors &&
+        (recipeForm.get('categoryName')?.dirty ||
+          recipeForm.get('categoryName')?.touched)
+      "
     >
-      Name category must contain at least 2 characters
-    </div>
-    <div *ngIf="recipeForm.get('categoryName')?.hasError('required')">
+      <div
+        class="error-message"
+        *ngIf="recipeForm.get('categoryName')?.hasError('pattern')"
+      >
+        Name category must contain at least 2 characters
+      </div>
+      <div
+        *ngIf="recipeForm.get('categoryName')?.hasError('required')"
+        class="error-message"
+      >
         Name category is required
       </div>
     </div>
@@ -78,12 +104,26 @@
   }
   <div>
     <label>Preparation Time (minutes):</label>
-    <input formControlName="preparationTimeInMinute" type="number" />
-    <div *ngIf="recipeForm.get('preparationTimeInMinute')?.errors && (recipeForm.get('preparationTimeInMinute')?.dirty || recipeForm.get('preparationTimeInMinute')?.touched)">
-        <div *ngIf="recipeForm.get('preparationTimeInMinute')?.hasError('required')">
-            Preparation Time is required
-          </div>
-</div>
+    <input
+      formControlName="preparationTimeInMinute"
+      type="number"
+      min="1"
+      max="1000"
+    />
+    <div
+      *ngIf="
+        recipeForm.get('preparationTimeInMinute')?.errors &&
+        (recipeForm.get('preparationTimeInMinute')?.dirty ||
+          recipeForm.get('preparationTimeInMinute')?.touched)
+      "
+    >
+      <div
+        *ngIf="recipeForm.get('preparationTimeInMinute')?.hasError('required')"
+        class="error-message"
+      >
+        Preparation Time is required
+      </div>
+    </div>
   </div>
 
   <mat-form-field>
@@ -95,7 +135,7 @@
       }
     </mat-select>
     <div
-      class="error"
+      class="error-message"
       *ngIf="
         recipeForm.get('level')?.hasError('required') &&
         recipeForm.get('level')?.touched
@@ -125,10 +165,8 @@
 
       <div formArrayName="components">
         <div
-          *ngFor="
-            let component of getFormArray(layer.get('components')).controls;
-            let j = index
-          "
+          *ngFor="let component of getLayerComponents(i); let j = index"
+          [formGroupName]="j"
         >
           <label>Component:</label>
           <input
@@ -139,7 +177,7 @@
         </div>
       </div>
       <div
-        class="error"
+        class="error-message"
         *ngIf="
           recipeForm.get('layers')?.hasError('nonEmptyIngredients') &&
           recipeForm.get('layers')?.touched
@@ -172,7 +210,7 @@
       Add Preparation Step
     </button>
     <div
-      class="error"
+      class="error-message"
       *ngIf="
         recipeForm
           .get('preparation')
@@ -189,23 +227,23 @@
 </form>
 
 @if(showdialog){
-    <ng-container>
-      <div class="dialog-overlay">
-        <div class="dialog-content">
-          <h2 mat-dialog-title>Thank you!</h2>
-          <mat-dialog-content>
-            <p>The Recipe added succecfuliiy</p>
-            <p>
-                Please, for 
-              <a mat-button color="primary" routerLink="/allrecipes">All-Recipes</a> 
-              details
-            </p>
-          </mat-dialog-content>
-          <mat-dialog-actions>
-            <button mat-button class="action-button" (click)="closeDialog()">
-              Close
-            </button>
-          </mat-dialog-actions>
-        </div>
-      </div> </ng-container
-    >}
+<ng-container>
+  <div class="dialog-overlay">
+    <div class="dialog-content">
+      <h2 mat-dialog-title>Thank you!</h2>
+      <mat-dialog-content>
+        <p>The Recipe added succecfuliiy</p>
+        <p>
+          Please, for
+          <a mat-button color="primary" routerLink="/allrecipes">All-Recipes</a>
+          details
+        </p>
+      </mat-dialog-content>
+      <mat-dialog-actions>
+        <button mat-button class="action-button" (click)="closeDialog()">
+          Close
+        </button>
+      </mat-dialog-actions>
+    </div>
+  </div> </ng-container
+>}

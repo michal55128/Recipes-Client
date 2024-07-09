@@ -94,9 +94,6 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.disableform = true;
-    // איך בודקים אם המשתמש כבר רשום במערכת??
-    // isExist=this.userService.getAllUsers().flter
-    // const user = this.userForm.value;
 
     const user: User = {
       email: email.value,
@@ -112,19 +109,12 @@ export class RegisterComponent implements OnInit {
         if (data && data.status === 201) {
           const responseBody: SignResponse = data.body!;
           console.log(responseBody);
-          // this.userService.token = data.token;
+          this.userService.token = responseBody.token;
           this.routerUrl.navigateByUrl('allrecipes');
-        } else {
-          this._snackBar.open('אימייל כבר קיים', 'סגור', {
-            verticalPosition: 'top',
-          });
-        }
-
+        } 
         console.log(data);
         console.log('signUp success!!');
-
-        // this.userService.token = data.token;
-        // this.routerUrl.navigateByUrl('allrecipes');
+   
       },
       (error) => {
         if (error.status === 409) {

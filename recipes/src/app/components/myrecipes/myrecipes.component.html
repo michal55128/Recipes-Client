@@ -1,0 +1,64 @@
+
+<div class="recipe-carousel">
+    <br/>
+    <h1>My-Recipes</h1>
+    <div class="recipe-cards-container">
+      <div
+        class="recipe-cards"
+      >
+        @for (recipe of recipes; track recipe._id) {
+        <div class="recipe-card">
+          <img [src]="recipe.image" alt="Recipe Image" />
+          <div class="recipe-details">
+            <h3>{{ recipe.name }}</h3>
+            <p>
+              {{ recipe.description }}<br /><br />
+              <mat-icon class="icon">alarm</mat-icon>
+              {{ recipe?.preparationTimeInMinute | timePreparation }}
+              <br /><br />
+            </p>
+  
+            <div>
+               Level: @for(i of levels;track i){
+              <div
+                [appLevelRepeat]="{ index: i, level: recipe.level }"
+                class="circle"
+              ></div>
+              }
+            </div>
+            <br />
+            <div class="recipe-actions">
+            <button (click)="recipeDetails(recipe._id)">View Details</button>
+            <button (click)="deleteRecipe(recipe._id)">Delete</button>
+            <button (click)="editRecipe(recipe._id)">Edit</button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  <div><br /></div>
+
+    @if(showdialog) {
+      <ng-container>
+        <div class="dialog-overlay">
+          <div class="dialog-content">
+            <h2 mat-dialog-title>Delete:</h2>
+            <mat-dialog-content>
+              <p>Are you sure you want to delete this recipe?</p>
+            </mat-dialog-content>
+            <p>
+              <a mat-button color="primary" (click)="confirmDelete()">Yes</a> or
+              <a mat-button color="primary" (click)="closeDialog()">No</a> 
+            </p>
+            <mat-dialog-actions>
+              <button mat-button class="action-button" (click)="closeDialog()">
+                Close
+              </button>
+            </mat-dialog-actions>
+          </div>
+        </div>
+      </ng-container>
+    }
+    

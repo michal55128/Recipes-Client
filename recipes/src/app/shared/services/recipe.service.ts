@@ -36,7 +36,7 @@ export class RecipeService {
   getRecipesByTime(time: number): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.recipeURL}/getByTime/${time}`);
   }
-  getRecipesByUsertime(userid: string): Observable<Recipe[]> {
+  getRecipesByUserName(userid: string): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.recipeURL}/userId/${userid}`);
   }
   addRecipe(r: Recipe) {
@@ -55,6 +55,12 @@ export class RecipeService {
       // this._snackBar.open('אופס המתכון לא נוסף נסה שנית', 'סגור', { verticalPosition: 'top', });
       console.error("Error occurred:", error);
     });
+  }
+  deleteRecipe(id: string): Observable<Recipe> {
+    return this.http.delete<Recipe>(`${this.recipeURL}/${id}`);
+  }
+  updateRecipe(id: string,r: Recipe): Observable<Recipe> {
+    return this.http.put<Recipe>(`${this.recipeURL}/${id}`,r);
   }
 
   // addRecipe(formData: FormData): Observable<any> {

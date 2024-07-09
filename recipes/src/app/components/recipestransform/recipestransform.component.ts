@@ -28,8 +28,8 @@ export class RecipestransformComponent {
   cardsToShow: number = 3;
   userService = inject(UserService);
   length: number = 0;
-  cardWidth: number = 340; // Adjust this based on your card width and margin
-  moveInterval: number = 5000; // Move interval in milliseconds
+  cardWidth: number = 340;
+  moveInterval: number = 5000; 
   moveSubscription!: Subscription;
   recipeService = inject(RecipeService);
   levels = Array.from({ length: 5 }, (_, i) => i + 1);
@@ -67,7 +67,6 @@ export class RecipestransformComponent {
 
   recipeDetails(id: string) {
     if (this.userService.token) {
-    console.log("hhhhhhhhh");
     this.router.navigate(['/recipe', id]);
     window.scrollTo(0, 0);
 

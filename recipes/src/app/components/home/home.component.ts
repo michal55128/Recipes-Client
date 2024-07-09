@@ -39,14 +39,12 @@ recipeService=inject(RecipeService);
     });
   }
 
-  viewRecipeDetails(recipe: any) {
-    // Navigate to the recipe details page
-    console.log('Viewing recipe details:', recipe.name);
-  }
 
   recipeDetails(id:string) {
     if (this.userService.token) {
       this.router.navigate(['/recipe', id]);
+      window.scrollTo(0, 0);
+
     } else {
       this.showdialog = true;
     }

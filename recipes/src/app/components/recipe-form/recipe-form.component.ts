@@ -29,6 +29,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { log } from 'console';
 
 @Component({
   selector: 'app-recipe-form',
@@ -69,7 +70,7 @@ export class RecipeFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private recipeService: RecipeService) {
     this.recipeForm = this.fb.group({
       name: ['', Validators.required],
-      description: [''],
+      description: ['',Validators.required],
       nameCategory: ['', Validators.required],
       preparationTimeInMinute: [null, [Validators.required, Validators.min(1)]],
       level: [1, [Validators.required, Validators.min(1), Validators.max(5)]],
@@ -154,6 +155,7 @@ export class RecipeFormComponent implements OnInit {
     const components = this.layers
       .at(layerIndex)
       .get('components') as FormArray;
+      // debugger
     console.log(components.value[componentIndex].component);
     console.log(layerIndex);
     console.log(componentIndex);
@@ -162,16 +164,9 @@ export class RecipeFormComponent implements OnInit {
       this.addComponent(layerIndex);
     }
 
-    // if (components.at(componentIndex).value.component[components.length-1] === '')
-    if (this.layers.at(componentIndex).value.component === '') {
-      // if (components.at(componentIndex).value.component[componentIndex]=== ''){
+   if (components.value[componentIndex].component === '') {
       components.removeAt(componentIndex);
     }
-
-    //  else if (componentIndex === components.length - 1) {
-    //   this.addComponent(layerIndex);
-
-    // }
   }
 
   onPreparationInput(stepIndex: number): void {
@@ -185,13 +180,19 @@ export class RecipeFormComponent implements OnInit {
   }
 
   convertComponentsToStrings(layers: any[]) {
-    return layers.map((layer: any) => ({
-      ...layer,
-      components: layer.components.map(
-        (component: any) => component.name || 'Unknown Component'
-      ),
-    }));
+    return layers.map((layer: any) => {
+      const components = layer.components.map((component: any) => component.component || 'Unknown Component');
+      
+      if (components.length > 0 && components[components.length - 1] === 'Unknown Component') {
+        components.pop();
+      }
+      return {
+        ...layer,
+        components: components,
+      };
+    });
   }
+  
   convertPreparationToStrings(preparation: any[]): string[] {
     return preparation
       .map((step: any) => step.step)
@@ -203,7 +204,6 @@ export class RecipeFormComponent implements OnInit {
 
     let layers = this.recipeForm.get('layers')?.value || [];
     layers = this.convertComponentsToStrings(layers);
-
     let preparation = this.recipeForm.get('Preparation')?.value || [];
     preparation = this.convertPreparationToStrings(preparation);
     let currntUser: User | null = this.userService.getCurrentUser();
@@ -234,15 +234,24 @@ export class RecipeFormComponent implements OnInit {
 
   getFormArray(control: AbstractControl | null): FormArray {
     return control as FormArray;
+
   }
+
+  getLayerComponents(layerIndex: number): AbstractControl[] {
+    const layer = this.layers.at(layerIndex);
+    const componentsArray = this.getFormArray(layer.get('components'));
+    if (componentsArray) {
+      return componentsArray.controls;
+    }
+    return [];
+  }
+
   isValidForm(): boolean {
     return this.recipeForm.valid;
   }
   closeDialog() {
     this.showdialog = false;
     this.router.navigate(['/']);
-
-    //לוהיסף ניתוב לכל המתוכנים
   }
   newCategoryAdd(){
     this.newCategory = !this.newCategory;

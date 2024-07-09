@@ -7,11 +7,8 @@
 
 <div class="content">
   <div class="search-container">
-    <button class="searchButton" (click)="searchRecipes()">Cancel</button>
-
+    <button class="searchButton" (click)="cancelRecipes()">Cancel</button>
     <button class="searchButton" (click)="searchRecipes()">Search</button>
-
-
     <input
       class="searchInput"
       [(ngModel)]="searchText"
@@ -27,6 +24,8 @@
       id="page"
       name="page"
       placeholder="Page"
+      min="0"
+      max="10"
     />
     <input
       class="numberInput"
@@ -35,15 +34,19 @@
       id="perPage"
       name="perPage"
       placeholder="Per Page"
+      min="0"
+      max="10"
     />
     <input
-    class="numberInput"
-    [(ngModel)]="maxtime"
-    type="number"
-    id="time"
-    name="time"
-    placeholder="Max Time"
-  />
+      class="numberInput"
+      [(ngModel)]="maxtime"
+      type="number"
+      id="time"
+      name="time"
+      placeholder="Max Time"
+      min="0"
+      max="10"
+    />
     <!-- <div class="category-select-container">
     <h3>Select Categories:</h3>
     <ng-select
@@ -70,9 +73,10 @@
       <mat-label>Select Categories</mat-label>
       <mat-select
         multiple
-        (selectionChange)="onSelectionChange()"
         [(ngModel)]="selectedCategories"
-      >
+      >    
+          <!-- (selectionChange)="onSelectionChange()" -->
+
         @for(category of categories ;track category._id){
         <mat-option [value]="category._id">{{
           category.description
@@ -104,7 +108,7 @@
           <p>
             {{ recipe.description }}<br /><br />
             <mat-icon class="icon">alarm</mat-icon>
-            {{ recipe.preparationTimeInMinute |timePreparation}} <br /><br />
+            {{ recipe.preparationTimeInMinute | timePreparation }} <br /><br />
             <span [innerHTML]="getLevelIcons(recipe.level)"></span>
           </p>
           <ng-template pTemplate="footer">
@@ -148,19 +152,44 @@
 </div>
 
 <div class="pagination">
-  <button class="pagination-button" (click)="prevPage()" [disabled]="page === 1">
+  <button
+    class="pagination-button"
+    (click)="prevPage()"
+    [disabled]="page === 1"
+  >
     <i class="fas fa-chevron-left"></i>
   </button>
   @for(num of getPageNumbers();track num){
   <ng-container>
-    <button class="pagination-button" (click)="goToPage(num)" [class.active]="num === page">
+    <button
+      class="pagination-button"
+      (click)="goToPage(num)"
+      [class.active]="num === page"
+    >
       {{ num }}
     </button>
   </ng-container>
-}
-  <button class="pagination-button" (click)="nextPage()" [disabled]="page === totalPages">
+  }
+  <button
+    class="pagination-button"
+    (click)="nextPage()"
+    [disabled]="page === totalPages"
+  >
     <i class="fas fa-chevron-right"></i>
   </button>
 </div>
-<div><br/><br/></div>
+<div><br /><br /></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { log } from 'console';
 import { Recipe } from '../models/recipe';
+import { Router } from '@angular/router';
 
 export interface SignResponse {
   user: User;
@@ -15,6 +16,7 @@ export interface SignResponse {
 })
 export class UserService {
   private http = inject(HttpClient);
+  private router=inject(Router);
   private usersURL = `${environment.apiURL}/users`;
   currentUser?: User;
   user: User = {};
@@ -25,23 +27,22 @@ export class UserService {
   getUserDetails() {
     return this.user;
   }
-  public get token(): string | null {
-    return localStorage.getItem('Token');
-  }
-  public set token(token: string | null) {
-    if (token) {
-      localStorage.setItem('Token', token);
-    }
-  }
+
   public logout() {
     localStorage.removeItem('CurrentUser');
-    localStorage.removeItem('Token');
+    localStorage.removeItem('usertoken');
+    localStorage.removeItem('time');
+    this.router.navigate(['/']);
+
   }
   public set loginUser(user: string | null) {
     if (user) {
       const userData: User = JSON.parse(user);
       this.currentUser = userData;
       localStorage.setItem('CurrentUser', user);
+      // localStorage.setItem('usertoken', token); 
+      // localStorage.setItem('time', Date.now().toString());
+
     }
   }
   // public get getCurrentUser(): string | null {
@@ -54,7 +55,6 @@ export class UserService {
 
   login(u: User) {
     console.log(this.currentUser);
-
     return this.http.post<{ user: User; token: string }>(
       `${this.usersURL}/signIn`,
       u
@@ -76,5 +76,31 @@ export class UserService {
       })
     );
   }
+
+
+  public get token(): string | null | boolean {
+    const incomeTimeStr = localStorage.getItem('time');
+    if (!incomeTimeStr) {
+      return false;
+    }
+    const tokenTime = parseInt(incomeTimeStr, 10);
+    const now = Date.now();
+  
+    const diffInMinutes = (now - tokenTime) / (1000 * 60); 
+    if (diffInMinutes < 60) { 
+      return localStorage.getItem('usertoken');
+    }
+    return false;
+  }
+  
+  public set token(token: string | null | undefined) {
+    if (token) {
+      localStorage.setItem('usertoken', token); 
+      localStorage.setItem('time', Date.now().toString());
+    }
+  }
+  
+
+
 
 }

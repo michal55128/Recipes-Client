@@ -24,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TimePreparationPipe } from '../../shared/pipes/time-preparation.pipe';
+import { time } from 'console';
 
 @Component({
   selector: 'app-allrecipes',
@@ -45,7 +46,7 @@ import { TimePreparationPipe } from '../../shared/pipes/time-preparation.pipe';
     MatSelectModule,
     ReactiveFormsModule,
     NgSelectModule,
-    TimePreparationPipe
+    TimePreparationPipe,
   ],
   templateUrl: './allrecipes.component.html',
   styleUrl: './allrecipes.component.scss',
@@ -64,24 +65,29 @@ export class AllrecipesComponent implements OnInit {
   page: number = 1;
   perPage: number = 8;
   totalPages: number = 10;
-  maxtime?:number=15;
+  maxtime?: number = 15;
 
   ngOnInit() {
-    this.onSelectionChange();
-    this.loadAllRecipes();
+    // this.onSelectionChange();
+    this.loadAllRecipes([]);
     this.loadCategories();
     console.log(this.recipes);
   }
-  onSelectionChange() {
-    if (!this.selectedCategories.length) {
-      this.loadAllRecipes();
-      return;
+  onSelectionChange(): Recipe[] {
+    debugger
+    if (
+      !this.selectedCategories.length ||
+      this.selectedCategories.length == this.categories.length
+    ) {
+      this.loadAllRecipes([]);
+      return [];
     }
-    this.recipes=[];
+
+    let recipesF :Recipe[]=[];
     this.selectedCategories.forEach((categoryId) => {
       this.categoryService.getById(categoryId).subscribe(
         (data: Recipe[]) => {
-          this.recipes.push(...data);
+          recipesF.push(...data);
           console.log(this.recipes);
           console.log(data);
         },
@@ -93,28 +99,62 @@ export class AllrecipesComponent implements OnInit {
         }
       );
     });
+    return recipesF;
   }
-  private loadAllRecipes() :Recipe[] {
-    this.recipes=[];
+
+  private loadAllRecipes(filteredrecipes: Recipe[]): Recipe[] {
+    //this.recipes = filteredrecipes;
+    let recipeFilter1=filteredrecipes;
+    console.log("filter",filteredrecipes);
+
     this.recipeService
       .getAllRecipes(this.searchText, this.page, this.perPage)
       .subscribe(
         (data: Recipe[]) => {
-          this.recipes = data;
-          this.updateFilteredRecipes();
+          if(filteredrecipes.length==0){
+            this.recipes=data;
+            recipeFilter1=data;
+          }
+          else{
+            console.log("filter",filteredrecipes);
+            console.log("recipeafterfilter",recipeFilter1);
+            recipeFilter1 = data.filter((rec) =>
+               filteredrecipes.find((filteredRec) => rec._id === filteredRec._id)
+            );
+          console.log("recipeafterfilter",recipeFilter1);
+          
+        }
         },
         (error) => {
           console.error('Failed to load recipes:', error);
         }
       );
-      return this.recipes;
+    return recipeFilter1;
   }
+  cancelRecipes() {
+    this.recipeService.getAllRecipes('', 1, 8).subscribe(
+      (data: Recipe[]) => {
+        this.recipes = data;
+       // this.updateFilteredRecipes(this.recipes);
+      },
+      (error) => {
+        console.error('Failed to load recipes:', error);
+      }
+    );
+    this.searchText = '';
+    this.page = 1;
+    this.perPage = 8;
+    this.totalPages = 10;
+    this.maxtime = 15;
+    this.selectedCategories=[];
+  }
+
   filteredRecipes: Recipe[] = [];
 
-  private updateFilteredRecipes() {
+  private updateFilteredRecipes(recipeFilter: Recipe[]) {
     const start = (this.page - 1) * this.perPage;
     const end = start + this.perPage;
-    this.filteredRecipes = this.recipes.slice(start, end);
+    this.filteredRecipes = recipeFilter.slice(start, end);
   }
 
   loadCategories() {
@@ -127,12 +167,37 @@ export class AllrecipesComponent implements OnInit {
       }
     );
   }
-  searchRecipes() {
+  async searchRecipes() {
+    let recipeFilter: Recipe[] = [];
+    recipeFilter = await this.onSelectionChange();
     this.totalPages = this.page;
     this.page = 1;
-    this.loadAllRecipes();
+debugger
+    let filter2=await this.loadAllRecipes(recipeFilter)
+    recipeFilter.push(...filter2);
+    let filter3=await this.getByTime(recipeFilter);
+    recipeFilter.push(...filter3);
+
+    this.recipes = recipeFilter;
+    console.log("recipes",this.recipes);
+    
   }
 
+  
+  getByTime(recipefiltels: Recipe[]): Recipe[] {
+    if (recipefiltels.length === 0) {
+      recipefiltels = this.recipes;
+    }
+    if (this.maxtime == null) {
+      console.error('maxtime is not defined');
+      return recipefiltels;
+    }
+    const recipesFiltertime = recipefiltels.filter(rec => rec.preparationTimeInMinute <= this.maxtime!);
+    console.log("recipesFiltertime", recipesFiltertime);
+  
+    return recipesFiltertime;
+  }
+  
   getCategoryDescription(categoryId: string): string {
     const category = this.categories.find((c) => c._id === categoryId);
     return category ? category.description : '';
@@ -161,6 +226,8 @@ export class AllrecipesComponent implements OnInit {
   viewRecipeDetails(id: string) {
     if (this.userService.token) {
       this.router.navigate(['/recipe', id]);
+      window.scrollTo(0, 0);
+
     } else {
       this.showdialog = true;
     }
@@ -172,20 +239,20 @@ export class AllrecipesComponent implements OnInit {
   prevPage(): void {
     if (this.page > 1) {
       this.page--;
-      this.loadAllRecipes();
+      this.loadAllRecipes([]);
     }
   }
 
   nextPage(): void {
     if (this.page < this.totalPages) {
       this.page++;
-      this.loadAllRecipes();
+      this.loadAllRecipes([]);
     }
   }
 
   goToPage(pageNum: number): void {
     this.page = pageNum;
-    this.loadAllRecipes();
+    this.loadAllRecipes([]);
   }
 
   getPageNumbers(): number[] {
