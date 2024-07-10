@@ -4,9 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
-    "build": "ng build",
+    "build": "ng build --prod",
+
+    "build:staging": "ng build --configuration=staging",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "prebuild":"npm install",
+    "prebuild:staging":"npm install",
     "serve:ssr:recipes": "node dist/recipes/server/server.mjs"
   },
   "private": true,

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: Recipes
+    env: static
+    staticPublishPath: /dist/Recipes
+    buildCommand: npm install && npm run build:staging
+    startCommand: npx serve -s dist/Recipes
+    envVas:
+      -Key: NODE_ENV
+      value: prduction
+
